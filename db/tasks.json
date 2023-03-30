@@ -1,19 +1,9 @@
 {
   "tasks": [
     {
-      "id": 4,
+      "id": 1,
       "name": "Morena",
-      "description": "..."
-    },
-    {
-      "id": 5,
-      "name": "Karen",
-      "description": "I love you"
-    },
-    {
-      "id": 6,
-      "name": "Alex",
-      "description": "How i'm feeling now"
+      "description": "I'm so sorry :("
     }
   ]
 }

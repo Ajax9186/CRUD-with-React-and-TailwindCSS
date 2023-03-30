@@ -7,10 +7,10 @@ function App() {
   const { tasks } = useAppContext();
 
   return (
-    <div>
+    <div className="min-h-screen bg-black">
       <main>
-        <section>
-          <div>
+        <section className="min-h-screen px-5 sm:px-7 flex justify-center items-center">
+          <div className="container max-w-md">
             <TaskForm />
             {tasks.length > 0 && <TasksList />}
           </div>
