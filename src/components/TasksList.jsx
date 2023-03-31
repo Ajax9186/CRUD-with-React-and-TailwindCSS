@@ -9,7 +9,7 @@ function TasksList() {
   if (loading) return <Loading />;
 
   return (
-    <div className="bg-white p-5 rounded">
+    <div>
       {tasks.map((task) => {
         return <Task key={task.id} task={task} />;
       })}

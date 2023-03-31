@@ -5,23 +5,28 @@ const url = "http://localhost:3000";
 const AppContext = createContext();
 
 const initialStateTask = { id: null, name: "", description: "" };
+const initialStateAlert = { show: false, message: "", style: "" };
 
 export function AppProvider({ children }) {
   const [task, setTask] = useState(initialStateTask);
   const [loading, setLoading] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [currentId, setCurrentId] = useState(null);
+  const [alert, setAlert] = useState(initialStateAlert);
+
+  const showAlert = (show = false, message = "", style = "") => {
+    setAlert({ show, message, style });
+  };
 
   const fetchTasks = async () => {
     try {
       const response = await fetch(`${url}/tasks`);
       const data = await response.json();
       setTasks(data);
-      setLoading(false);
     } catch (error) {
       console.log(error);
-      setLoading(false);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -40,8 +45,9 @@ export function AppProvider({ children }) {
         body: JSON.stringify(task),
         headers: { "Content-Type": "application/json" },
       });
+      showAlert(true, "New task created", "green");
     } catch (error) {
-      console.log(error);
+      showAlert(true, error.message, "red");
     }
   };
 
@@ -58,6 +64,7 @@ export function AppProvider({ children }) {
         body: JSON.stringify(task),
         headers: { "Content-Type": "application/json" },
       });
+      showAlert(true, "Task updated", "green");
     } catch (error) {
       console.log(error);
     }
@@ -76,6 +83,7 @@ export function AppProvider({ children }) {
       await fetch(`${url}/tasks/${id}`, {
         method: "DELETE",
       });
+      showAlert(true, "Deleted task", "red");
     } catch (error) {
       console.log(error);
     }
@@ -88,10 +96,12 @@ export function AppProvider({ children }) {
         currentId,
         loading,
         tasks,
+        alert,
         handleChange,
         handleSubmit,
         updateStates,
         deleteTask,
+        showAlert,
       }}
     >
       {children}
